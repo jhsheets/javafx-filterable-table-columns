@@ -32,15 +32,15 @@ import org.google.jhsheets.filtered.tablecolumn.editor.NumberFilterEditor;
  *
  * @author JHS
  */
-public class FilterbleDoubleTableColumn<S, T>
+public class FilterableDoubleTableColumn<S, T>
 extends AbstractFilterableTableColumn<S, Double, NumberOperator<Double>, NumberFilterEditor<Double>>
 {
-    public FilterbleDoubleTableColumn()
+    public FilterableDoubleTableColumn()
     {
         this("");
     }
     
-    public FilterbleDoubleTableColumn(String text)
+    public FilterableDoubleTableColumn(String text)
     {
         super(text, new NumberFilterEditor<>(text, Double.class));
     }

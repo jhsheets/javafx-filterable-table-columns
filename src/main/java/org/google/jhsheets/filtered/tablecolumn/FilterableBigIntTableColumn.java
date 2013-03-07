@@ -25,7 +25,7 @@
  */
 package org.google.jhsheets.filtered.tablecolumn;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.google.jhsheets.filtered.operators.NumberOperator;
 import org.google.jhsheets.filtered.tablecolumn.editor.NumberFilterEditor;
 
@@ -33,16 +33,16 @@ import org.google.jhsheets.filtered.tablecolumn.editor.NumberFilterEditor;
  *
  * @author JHS
  */
-public class FilterbleBigDecimalTableColumn<S, T>
-extends AbstractFilterableTableColumn<S, BigDecimal, NumberOperator<BigDecimal>, NumberFilterEditor<BigDecimal>>
+public class FilterableBigIntTableColumn<S, T>
+extends AbstractFilterableTableColumn<S, BigInteger, NumberOperator<BigInteger>, NumberFilterEditor<BigInteger>>
 {
-    public FilterbleBigDecimalTableColumn()
+    public FilterableBigIntTableColumn()
     {
         this("");
     }
     
-    public FilterbleBigDecimalTableColumn(String text)
+    public FilterableBigIntTableColumn(String text)
     {
-        super(text, new NumberFilterEditor<>(text, BigDecimal.class));
+        super(text, new NumberFilterEditor<>(text, BigInteger.class));
     }
 }
