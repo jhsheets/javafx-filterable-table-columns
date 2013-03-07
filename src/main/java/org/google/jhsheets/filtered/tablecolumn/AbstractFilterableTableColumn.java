@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AbstractFilterableTableColumn<S,T,R extends IFilterOperator,M extends IFilterEditor<R>> 
 extends TableColumn<S,T>
+implements IFilterableTableColumn<R, M>
 {
     private static final Logger logger = LoggerFactory.getLogger(AbstractFilterableTableColumn.class);
     
@@ -166,29 +167,19 @@ extends TableColumn<S,T>
         return filterEditor;
     }
     
-    /**
-     * Note: this method can return {@link IFilterOperator.Type.NONE}'s.  
-     * Use {@link #isFiltered()} to determine if there is actually a filter
-     * applied to this column
-     * 
-     * @return All applied filters.
-     */
+    @Override
     public ObservableList<R> getFilters() 
     { 
         return filterResults;
     }
     
-    /**
-     * @return Property indicating if this column has filters applied
-     */
+    @Override
     public final BooleanProperty filteredProperty()
     {
         return filterEditor.filteredProperty();
     }
     
-    /**
-     * @return If this column has filters applied
-     */
+    @Override
     public boolean isFiltered()
     {
         return filterEditor.isFiltered();
