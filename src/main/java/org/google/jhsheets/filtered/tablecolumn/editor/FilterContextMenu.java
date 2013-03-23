@@ -87,6 +87,12 @@ extends ContextMenu
         resetMenu();
     }
     
+    public void clearFilterMenuItems()
+    {
+        menuItems.clear();
+        resetMenu();
+    }
+    
     private void resetMenu()
     {
         getItems().clear();

@@ -35,6 +35,16 @@ import org.google.jhsheets.filtered.tablecolumn.editor.EnumFilterEditor;
 public class FilterableEnumTableColumn<S, T>
 extends AbstractFilterableTableColumn<S, T, EnumOperator<T>, EnumFilterEditor<T>>
 {
+    public FilterableEnumTableColumn()
+    {
+        this("", null);
+    }
+    
+    public FilterableEnumTableColumn(String text)
+    {
+        this(text, null);
+    }
+    
     public FilterableEnumTableColumn(T[] enumValues)
     {
         this("", enumValues);
@@ -43,5 +53,10 @@ extends AbstractFilterableTableColumn<S, T, EnumOperator<T>, EnumFilterEditor<T>
     public FilterableEnumTableColumn(String text, T[] enumValues)
     {
         super(text, new EnumFilterEditor<>(text, enumValues));
+    }
+    
+    public void setEnumValues(T[] enumValues)
+    {
+        getFilterEditor().populateMenuItems(enumValues);
     }
 }

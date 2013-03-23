@@ -80,6 +80,11 @@ implements IFilterEditor<R>
         menu.addFilterMenuItems(items);
     }
     
+    public void clearFilterMenuItems()
+    {
+        menu.clearFilterMenuItems();
+    }
+    
     @Override
     public BooleanProperty filteredProperty()
     {

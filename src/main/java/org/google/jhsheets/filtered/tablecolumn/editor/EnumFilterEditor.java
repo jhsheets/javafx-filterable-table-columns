@@ -38,24 +38,34 @@ import org.google.jhsheets.filtered.operators.EnumOperator;
 public class EnumFilterEditor<T>
 extends AbstractFilterEditor<EnumOperator<T>>
 {
-    private final boolean[] previousSelections;
+    private boolean[] previousSelections;
     
-    private final List<CheckBox> enumCombos;
+    private List<CheckBox> enumCombos;
     
     
     public EnumFilterEditor(String title, T[] values)
     {
         super(title);
-        this.previousSelections = new boolean[values.length];
-        this.enumCombos = new ArrayList<>(values.length);
+        populateMenuItems(values);
+    }
+    
+    final public void populateMenuItems(T[] values)
+    {
+        final int len = values == null ? 0 : values.length;
+        this.previousSelections = new boolean[len];
+        this.enumCombos = new ArrayList<>(len);
         
-        final List<CheckBoxMenuItem> menuItems = new ArrayList<>(values.length);
-        for (T value : values)
+        clearFilterMenuItems();
+        final List<CheckBoxMenuItem> menuItems = new ArrayList<>(len);
+        if (values != null)
         {
-            final CheckBox ecb = new CheckBox(value.toString());
-            ecb.setUserData(value);
-            enumCombos.add(ecb);
-            menuItems.add(new CheckBoxMenuItem(ecb));
+            for (T value : values)
+            {
+                final CheckBox ecb = new CheckBox(value.toString());
+                ecb.setUserData(value);
+                enumCombos.add(ecb);
+                menuItems.add(new CheckBoxMenuItem(ecb));
+            }
         }
         addFilterMenuItems(menuItems);
     }
