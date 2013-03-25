@@ -25,15 +25,12 @@
  */
 package org.google.jhsheets.filtered.tablecolumn;
 
-import org.google.jhsheets.filtered.operators.NumberOperator;
-import org.google.jhsheets.filtered.tablecolumn.editor.NumberFilterEditor;
-
 /**
  *
  * @author JHS
  */
 public class FilterableIntegerTableColumn<S, T>
-extends AbstractFilterableTableColumn<S, Integer, NumberOperator<Integer>, NumberFilterEditor<Integer>>
+extends AbstractFilterableNumberTableColumn<S, Integer>
 {
     public FilterableIntegerTableColumn()
     {
@@ -42,7 +39,7 @@ extends AbstractFilterableTableColumn<S, Integer, NumberOperator<Integer>, Numbe
     
     public FilterableIntegerTableColumn(String text)
     {
-        super(text, new NumberFilterEditor<>(text, Integer.class));
+        super(text, Integer.class);
     }
     
 }
