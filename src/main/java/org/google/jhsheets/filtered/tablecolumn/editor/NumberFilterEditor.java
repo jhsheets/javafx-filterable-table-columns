@@ -45,8 +45,8 @@ public class NumberFilterEditor<T extends Number>
 extends AbstractFilterEditor<NumberOperator<T>>
 {
     private final Class<T> klass;
-    private final NumberFilterEditor.Picker picker1;
-    private final NumberFilterEditor.Picker picker2;
+    private final NumberFilterEditor<T>.Picker picker1;
+    private final NumberFilterEditor<T>.Picker picker2;
     
     public NumberFilterEditor(String title, Class<T> klass)
     {
@@ -94,7 +94,8 @@ extends AbstractFilterEditor<NumberOperator<T>>
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public NumberOperator<T>[] getFilters() throws Exception 
     {
         final NumberOperator<T> val1 = picker1.getFilter();
@@ -221,7 +222,8 @@ extends AbstractFilterEditor<NumberOperator<T>>
             return changed;
         }
         
-        public NumberOperator<T> getFilter() throws Exception
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+		public NumberOperator<T> getFilter() throws Exception
         {
             final String text = textField.getText();
             final NumberOperator.Type selectedType = typeBox.getSelectionModel().getSelectedItem();

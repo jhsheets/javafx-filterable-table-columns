@@ -32,7 +32,7 @@ import org.google.jhsheets.filtered.operators.IFilterOperator;
  * A graphical interface used to change filters
  * @author JHS
  */
-public interface IFilterEditor<R extends IFilterOperator>
+public interface IFilterEditor<R extends IFilterOperator<?>>
 {
     /**
      * @return The user entered filters

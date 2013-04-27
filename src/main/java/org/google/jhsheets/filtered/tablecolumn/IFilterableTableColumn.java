@@ -34,7 +34,7 @@ import org.google.jhsheets.filtered.tablecolumn.editor.IFilterEditor;
  *
  * @author jhsheets@gmail.com
  */
-public interface IFilterableTableColumn<R extends IFilterOperator,M extends IFilterEditor<R>> 
+public interface IFilterableTableColumn<R extends IFilterOperator<?>,M extends IFilterEditor<R>> 
 {
     /**
      * Note: this method can return {@link IFilterOperator.Type.NONE}'s.  

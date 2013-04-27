@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author JHS
  */
-public class AbstractFilterableTableColumn<S,T,R extends IFilterOperator,M extends IFilterEditor<R>> 
+public class AbstractFilterableTableColumn<S,T,R extends IFilterOperator<?>,M extends IFilterEditor<R>> 
 extends TableColumn<S,T>
 implements IFilterableTableColumn<R, M>
 {
@@ -116,7 +116,7 @@ implements IFilterableTableColumn<R, M>
                     {
                         filterResults.setAll(filterEditor.getFilters());
                         
-                        final ColumnFilterEvent e = new ColumnFilterEvent(
+                        final ColumnFilterEvent<S,T,R,M> e = new ColumnFilterEvent<>(
                                     AbstractFilterableTableColumn.this.getTableView()
                                     , AbstractFilterableTableColumn.this
                                     , getFilters());
@@ -144,7 +144,7 @@ implements IFilterableTableColumn<R, M>
                     {
                         filterResults.setAll(filterEditor.getFilters());
                         
-                        final ColumnFilterEvent e = new ColumnFilterEvent(
+                        final ColumnFilterEvent<S,T,R,M> e = new ColumnFilterEvent<>(
                                 AbstractFilterableTableColumn.this.getTableView()
                                 , AbstractFilterableTableColumn.this
                                 , getFilters());

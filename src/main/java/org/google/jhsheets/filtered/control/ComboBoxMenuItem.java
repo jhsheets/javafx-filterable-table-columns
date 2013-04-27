@@ -36,9 +36,9 @@ import javafx.scene.layout.BorderPane;
  */
 public class ComboBoxMenuItem extends CustomMenuItem
 {
-    final ComboBox comboBox;
+    final ComboBox<?> comboBox;
     
-    public ComboBoxMenuItem(ComboBox comboBox) {
+    public ComboBoxMenuItem(ComboBox<?> comboBox) {
         this.comboBox = comboBox;
         comboBox.setPrefWidth(Math.max(144,comboBox.getPrefWidth())); // 144px is approx the size of our TextFieldMenuItem
         comboBox.setMaxWidth(Double.MAX_VALUE);
@@ -55,7 +55,7 @@ public class ComboBoxMenuItem extends CustomMenuItem
         getStyleClass().add("combobox-menu-item");
     }
     
-    public ComboBox getComboBox() {
+    public ComboBox<?> getComboBox() {
         return comboBox;
     }
 }

@@ -45,7 +45,8 @@ public class CalendarView extends VBox {
      *
      * @param locale The locale.
      */
-    public CalendarView(final Locale locale) {
+    @SuppressWarnings("restriction")
+	public CalendarView(final Locale locale) {
         this(locale, Calendar.getInstance(locale));
 
         // When the locale changes, also change the calendar.

@@ -70,10 +70,11 @@ extends AbstractFilterEditor<EnumOperator<T>>
         addFilterMenuItems(menuItems);
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public EnumOperator<T>[] getFilters() throws Exception 
     {
-        final ArrayList<EnumOperator> retList = new ArrayList<>();
+        final ArrayList<EnumOperator<?>> retList = new ArrayList<>();
         
         for (CheckBox emt : enumCombos)
         {

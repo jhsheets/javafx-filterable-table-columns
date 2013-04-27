@@ -37,7 +37,7 @@ import org.google.jhsheets.filtered.operators.IFilterOperator;
  *
  * @author JHS
  */
-public abstract class AbstractFilterEditor<R extends IFilterOperator>
+public abstract class AbstractFilterEditor<R extends IFilterOperator<?>>
 implements IFilterEditor<R>
 {
     private FilterContextMenu menu;

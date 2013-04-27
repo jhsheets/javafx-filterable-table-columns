@@ -36,20 +36,22 @@ import org.google.jhsheets.filtered.tablecolumn.editor.IFilterEditor;
  * An event that is fired when an {@link AbstractFilterableTableColumn} has its filter changed
  * @author JHS
  */
-public class ColumnFilterEvent<S,T,R extends IFilterOperator,M extends IFilterEditor<R>>
+public class ColumnFilterEvent<S,T,R extends IFilterOperator<?>,M extends IFilterEditor<R>>
 extends Event
 {
-    /**
+	private static final long serialVersionUID = 4680995104566602041L;
+
+	/**
      * An event indicating that the filter has changed
      */
-    public static final EventType<ColumnFilterEvent> FILTER_CHANGED_EVENT = new EventType<>(Event.ANY, "FILTER_CHANGED");
+    public static final EventType<ColumnFilterEvent<?,?,?,?>> FILTER_CHANGED_EVENT = new EventType<>(Event.ANY, "FILTER_CHANGED");
     
     private List<R> filter;
     
     private AbstractFilterableTableColumn<S,T,R,M> sourceColumn;
     
     
-    public ColumnFilterEvent(TableView table, AbstractFilterableTableColumn<S,T,R,M> sourceColumn, List<R> filter) 
+    public ColumnFilterEvent(TableView<S> table, AbstractFilterableTableColumn<S,T,R,M> sourceColumn, List<R> filter) 
     {
         super(table, Event.NULL_SOURCE_TARGET, ColumnFilterEvent.FILTER_CHANGED_EVENT);
 

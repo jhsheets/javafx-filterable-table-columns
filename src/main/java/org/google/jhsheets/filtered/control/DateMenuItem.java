@@ -25,11 +25,10 @@
  */
 package org.google.jhsheets.filtered.control;
 
-import thirdparty.eu.schudt.javafx.controls.calendar.DatePicker;
 import javafx.geometry.Insets;
 import javafx.scene.control.CustomMenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import thirdparty.eu.schudt.javafx.controls.calendar.DatePicker;
 
 /**
  *

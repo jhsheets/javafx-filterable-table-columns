@@ -29,9 +29,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
 import org.google.jhsheets.filtered.tablecolumn.AbstractFilterableTableColumn;
 import org.google.jhsheets.filtered.tablecolumn.ColumnFilterEvent;
 import org.slf4j.Logger;
@@ -47,16 +47,16 @@ import org.slf4j.LoggerFactory;
  * 
  * @author JHS
  */
-public class FilteredTableView<T>
-extends TableView<T>
+public class FilteredTableView<S>
+extends TableView<S>
 {
     private static final Logger logger = LoggerFactory.getLogger(FilteredTableView.class);
     
     /** List of filterable columns with a filter applied */
-    private ObservableList<AbstractFilterableTableColumn> filteredColumns;
+    private ObservableList<AbstractFilterableTableColumn<?,?,?,?>> filteredColumns;
     
     
-    public FilteredTableView(ObservableList<T> ol)
+    public FilteredTableView(ObservableList<S> ol)
     {
         this();
         super.setItems(ol);
@@ -70,13 +70,13 @@ extends TableView<T>
         
         // Execute the filteringChanged runnable
         // And, if a column has a filter on it, make sure that column is in our filteredColumns list
-        final EventHandler<ColumnFilterEvent> columnFilteredEventHandler = new EventHandler<ColumnFilterEvent>() 
+        final EventHandler<ColumnFilterEvent<?,?,?,?>> columnFilteredEventHandler = new EventHandler<ColumnFilterEvent<?,?,?,?>>() 
         {
             @Override
-            public void handle(ColumnFilterEvent event) 
+            public void handle(ColumnFilterEvent<?,?,?,?> event) 
             {
                 // Keep track of which TableColumn's are currently filtered
-                final AbstractFilterableTableColumn col = event.sourceColumn();
+                final AbstractFilterableTableColumn<?,?,?,?> col = event.sourceColumn();
                 
                 if (col.isFiltered() == true && filteredColumns.contains(col) == false)
                 {
@@ -95,32 +95,32 @@ extends TableView<T>
         };
         
         // Make sure any filterable columns on this table have the columnFilterEventHandler
-        getColumns().addListener(new ListChangeListener<TableColumn>() 
+        getColumns().addListener(new ListChangeListener<TableColumn<?,?>>() 
         {
             @Override
-            public void onChanged(Change<? extends TableColumn> change) 
+            public void onChanged(Change<? extends TableColumn<?,?>> change) 
             {
                 change.next();// must advance to next change, for whatever reason...
                 if (change.wasAdded())
                 {
-                    for (final TableColumn<T,?> col : change.getAddedSubList())
+                    for (final TableColumn<?,?> col : change.getAddedSubList())
                     {
                         if (col instanceof AbstractFilterableTableColumn)
                         {
                             logger.debug(String.format("Now listening for filter changes on column: %s", col.getText()));
-                            final AbstractFilterableTableColumn fcol = (AbstractFilterableTableColumn)col;
+                            final AbstractFilterableTableColumn<?,?,?,?> fcol = (AbstractFilterableTableColumn<?,?,?,?>)col;
                             fcol.addEventHandler(ColumnFilterEvent.FILTER_CHANGED_EVENT, columnFilteredEventHandler);
                         }
                     }
                 }
                 if (change.wasRemoved())
                 {
-                    for (final TableColumn<T,?> col : change.getAddedSubList())
+                    for (final TableColumn<?,?> col : change.getAddedSubList())
                     {
                         if (col instanceof AbstractFilterableTableColumn)
                         {
                             logger.debug(String.format("No longer listening for filter changes on column: %s", col.getText()));
-                            final AbstractFilterableTableColumn fcol = (AbstractFilterableTableColumn)col;
+                            final AbstractFilterableTableColumn<?,?,?,?> fcol = (AbstractFilterableTableColumn<?,?,?,?>)col;
                             fcol.removeEventHandler(ColumnFilterEvent.FILTER_CHANGED_EVENT, columnFilteredEventHandler);
                         }
                     }
@@ -141,7 +141,7 @@ extends TableView<T>
     /**
      * @return Observable list containing any {@link AbstractFilterableTableColumn}'s that have a filter applied
      */
-    public ObservableList<AbstractFilterableTableColumn> getFilteredColumns()
+    public ObservableList<AbstractFilterableTableColumn<?,?,?,?>> getFilteredColumns()
     {
         return filteredColumns;
     }
