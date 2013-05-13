@@ -25,12 +25,24 @@
  */
 package org.google.jhsheets.filtered.operators;
 
+import java.util.EnumSet;
+
 /**
  *
  * @author JHS
  */
 public class NumberOperator<T extends Number> implements IFilterOperator<T>
 {
+	public static final EnumSet<Type> VALID_TYPES = EnumSet.of(
+			Type.NONE
+			, Type.EQUALS
+			, Type.NOTEQUALS
+			, Type.GREATERTHAN
+			, Type.GREATERTHANEQUALS
+			, Type.LESSTHAN
+			, Type.LESSTHANEQUALS
+			);
+
     private final IFilterOperator.Type type;
     private final T value;
     
@@ -52,9 +64,4 @@ public class NumberOperator<T extends Number> implements IFilterOperator<T>
         return value;
     }
     
-    public static Type[] validTypes()
-    {
-        return new Type[] { Type.NONE, Type.EQUALS, Type.NOTEQUALS
-                , Type.GREATERTHAN, Type.GREATERTHANEQUALS, Type.LESSTHAN, Type.LESSTHANEQUALS };
-    }
 }

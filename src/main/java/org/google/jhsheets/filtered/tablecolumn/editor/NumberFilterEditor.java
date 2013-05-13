@@ -28,6 +28,7 @@ package org.google.jhsheets.filtered.tablecolumn.editor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -53,7 +54,12 @@ extends AbstractFilterEditor<NumberOperator<T>>
     
     public NumberFilterEditor(String title, Class<T> klass)
     {
-        this(title, klass, NumberOperator.validTypes());
+        this(title, klass, NumberOperator.VALID_TYPES);
+    }
+    
+    public NumberFilterEditor(String title, Class<T> klass, EnumSet<NumberOperator.Type> types)
+    {
+    	this(title, klass, types.toArray(new NumberOperator.Type[0]));
     }
     
     public NumberFilterEditor(String title, Class<T> klass, NumberOperator.Type[] types)

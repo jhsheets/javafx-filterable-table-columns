@@ -26,6 +26,7 @@
 package org.google.jhsheets.filtered.tablecolumn.editor;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
@@ -50,7 +51,12 @@ extends AbstractFilterEditor<BooleanOperator>
     
     public BooleanFilterEditor(String title)
     {
-        this(title, BooleanOperator.validTypes());
+        this(title, BooleanOperator.VALID_TYPES);
+    }
+    
+    public BooleanFilterEditor(String title, EnumSet<BooleanOperator.Type> types)
+    {
+    	this(title, types.toArray(new BooleanOperator.Type[0]));
     }
     
     public BooleanFilterEditor(String title, BooleanOperator.Type[] types)

@@ -25,12 +25,20 @@
  */
 package org.google.jhsheets.filtered.operators;
 
+import java.util.EnumSet;
+
 /**
  *
  * @author JHS
  */
 public class BooleanOperator implements IFilterOperator<Boolean>
 {
+	public static final EnumSet<Type> VALID_TYPES = EnumSet.of(
+			Type.NONE
+			, Type.TRUE
+			, Type.FALSE
+			);
+	
     private final IFilterOperator.Type type;
     private final Boolean value;
     
@@ -52,8 +60,4 @@ public class BooleanOperator implements IFilterOperator<Boolean>
         return value;
     }
     
-    public static Type[] validTypes()
-    {
-        return new Type[] { Type.NONE, Type.TRUE, Type.FALSE };
-    }
 }

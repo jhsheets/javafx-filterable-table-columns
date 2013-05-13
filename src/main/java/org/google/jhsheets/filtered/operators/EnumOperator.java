@@ -25,12 +25,19 @@
  */
 package org.google.jhsheets.filtered.operators;
 
+import java.util.EnumSet;
+
 /**
  *
  * @author JHS
  */
 public class EnumOperator<T> implements IFilterOperator<T>
 {
+	public static final EnumSet<Type> VALID_TYPES = EnumSet.of(
+			Type.NONE
+			, Type.EQUALS
+			);
+	
     private final IFilterOperator.Type type;
     private final T value;
     
@@ -52,8 +59,4 @@ public class EnumOperator<T> implements IFilterOperator<T>
         return value;
     }
     
-    public static Type[] validTypes()
-    {
-        return new Type[] { Type.NONE, Type.EQUALS };
-    }
 }

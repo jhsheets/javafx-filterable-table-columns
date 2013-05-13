@@ -26,6 +26,7 @@
 package org.google.jhsheets.filtered.tablecolumn.editor;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -55,7 +56,12 @@ extends AbstractFilterEditor<StringOperator>
     
     public TextFilterEditor(String title)
     {
-        this(title, StringOperator.validTypes());
+        this(title, StringOperator.VALID_TYPES);
+    }
+    
+    public TextFilterEditor(String title, EnumSet<StringOperator.Type> types)
+    {
+    	this(title, types.toArray(new StringOperator.Type[0]));
     }
     
     public TextFilterEditor(String title, StringOperator.Type[] types)

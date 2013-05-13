@@ -29,6 +29,7 @@ import thirdparty.eu.schudt.javafx.controls.calendar.DatePicker;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -53,17 +54,22 @@ extends AbstractFilterEditor<DateOperator>
     
     public DateFilterEditor(String title)
     {
-        this(title, "yyyy-MM-dd HH:mm", DateOperator.validTypes());
+        this(title, "yyyy-MM-dd HH:mm", DateOperator.VALID_TYPES);
     }
     
     public DateFilterEditor(String title, String dateFormat)
     {
-        this(title, dateFormat, DateOperator.validTypes());
+        this(title, dateFormat, DateOperator.VALID_TYPES);
     }
     
     public DateFilterEditor(String title, DateOperator.Type[] types)
     {
         this(title, "yyyy-MM-dd HH:mm", types);
+    }
+    
+    public DateFilterEditor(String title, String dateFormat, EnumSet<DateOperator.Type> types)
+    {
+    	this(title, "yyyy-MM-dd HH:mm", types.toArray(new DateOperator.Type[0]));
     }
     
     public DateFilterEditor(String title, String dateFormat, DateOperator.Type[] types)

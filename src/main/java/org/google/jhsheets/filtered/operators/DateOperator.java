@@ -26,6 +26,7 @@
 package org.google.jhsheets.filtered.operators;
 
 import java.util.Date;
+import java.util.EnumSet;
 
 /**
  *
@@ -33,6 +34,16 @@ import java.util.Date;
  */
 public class DateOperator implements IFilterOperator<Date>
 {
+	public static final EnumSet<Type> VALID_TYPES = EnumSet.of(
+			Type.NONE
+			, Type.EQUALS
+			, Type.NOTEQUALS
+			, Type.AFTER
+			, Type.AFTERON
+			, Type.BEFORE
+			, Type.BEFOREON
+			);
+	
     private final IFilterOperator.Type type;
     private final Date value;
     
@@ -54,9 +65,4 @@ public class DateOperator implements IFilterOperator<Date>
         return value;
     }
     
-    public static Type[] validTypes()
-    {
-        return new Type[] { Type.NONE, Type.EQUALS, Type.NOTEQUALS
-                , Type.AFTER, Type.AFTERON, Type.BEFORE, Type.BEFOREON };
-    }
 }
