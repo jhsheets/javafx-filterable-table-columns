@@ -1,90 +1,95 @@
 /*
-http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
+ * http://fxexperience.com/2011/12/styling-fx-buttons-with-css/
+ * http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
+ * https://code.google.com/p/javafx-demos/source/browse/trunk/javafx-demos/src/main/resources/styles/caspian/caspian_2.1_GA.css?r=17
+ * https://bitbucket.org/openjfxmirrors/openjfx-8-graphics-rt/src/3408eed98c2c/javafx-ui-controls/src/javafx/scene/control?at=default
+ */
 
-Example of setting a global font
-Note: font-face currently not supported, but will be soon.  Instead, you need to call
-javafx.scene.text.Font.loadFont(getClass().getClassLoader().getResource("ARIALUNI.TTF").toExternalForm(), 10);
-somewhere to actually load the font. 
+.filter-popup-menu
+{
+	-fx-skin: "org.google.jhsheets.filtered.tablecolumn.editor.FilterMenuPopupSkin";
+}
 
-@font-face {
-    font-family: 'Arial Unicode MS';
-    src: url('ARIALUNI.TTF');
+/* Get rid of the border around the list-view */
+.filter-popup-menu .content .list-view
+{
+	-fx-background-color: transparent;
 }
-.root {
-    -fx-font-family: 'Arial Unicode MS';
-}
-*/
 
-.titled-separator-menu-item .line {
-    -fx-border-color: 
-        derive(-fx-background, -40%) 
-        -fx-background 
-        derive(-fx-background, 40%) 
-        -fx-background;
+/* Get rid of cell coloring */
+.filter-popup-menu .content .list-view .list-cell:even
+, .filter-popup-menu .content .list-view .list-cell:odd
+{
+	-fx-background-color: transparent;
 }
-.titled-separator-menu-item .label {
-    -fx-background-color: derive(-fx-background, 0%);
+
+/* Color list cell background hover */
+.filter-popup-menu .content .list-view .list-cell:filled:hover
+{
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-background-insets: 0 0 0 0;
+}
+
+.filter-popup-menu .content .list-view .list-cell:filled .check-box
+{
+	-fx-text-fill: black;
+}
+
+/* Color list cell foreground on hover */
+.filter-popup-menu .content .list-view .list-cell:filled:hover .check-box
+{
+	-fx-text-fill: white;
+}
+
+/* Pad the content area (which contains filter-popup-menu */
+.filter-popup-menu .content 
+{
+	-fx-padding: 4.0 4.0 0.0 4.0;
+}
+
+/* Put some space between the buttons and the content area */
+.filter-popup-menu .content .bottom
+{
+	-fx-padding: 6 0 0 0;
+}
+
+.filter-popup-menu .content .bottom .separator
+{
+	-fx-padding: 0 0 5 0;
+}
+
+.filter-popup-menu .content .bottom .separator .line
+{
+	-fx-border-style: solid; 
+    -fx-border-color: derive(-fx-background, -20%) -fx-background derive(-fx-background, 20%) -fx-background;
+}
+
+.filter-popup-menu .content .top
+{
+	-fx-padding: 4.0 -2.0 4.0 -2.0
+}
+
+.filter-popup-menu .content .top .label
+{
+	-fx-background-color: linear-gradient(derive(-fx-control-inner-background, -2%), derive(-fx-control-inner-background, -9%));
     -fx-background-radius: 5,5,5,5;
     -fx-text-fill: black;
     -fx-font-weight: bold;
-    -fx-padding: -2 2 -2 2;
+    -fx-text-alignment: center;
+    -fx-padding: 0 2 0 2;
 }
 
-.combobox-menu-item ,
-.combobox-menu-item:hover ,
-.combobox-menu-item:focused {
-    -fx-background-color: transparent;
-}
-.combobox-menu-item .combo-box:disabled {
-    -fx-background-color: transparent, -fx-outer-border, -fx-inner-border, -fx-body-color;
+.filter-popup-menu .content .top .separator
+{
+	-fx-padding: 0.0 2.0 0.0 2.0;
 }
 
-.textfield-menu-item ,
-.textfield-menu-item:hover ,
-.textfield-menu-item:focused {
-    -fx-text-fill: black;
-    -fx-background-color: transparent;
+.filter-popup-menu .content .top .separator .line
+{
+	-fx-border-style: solid; 
+    -fx-border-color: derive(-fx-background, -20%) -fx-background derive(-fx-background, 20%) -fx-background;
 }
-.textfield-menu-item .text-field:disabled {
-    -fx-background-color: transparent, -fx-box-border, -fx-control-inner-background;
-}
-
-.date-menu-item ,
-.date-menu-item:hover ,
-.date-menu-item:focused {
-    -fx-text-fill: black;
-    -fx-background-color: transparent;
-}
-.date-menu-item .text-field:disabled {
-    -fx-background-color: transparent, -fx-box-border, -fx-control-inner-background;
-}
-
-
-
-.filter-button-node {
-    -fx-background-image: url('funnel-icon.png');
-    -fx-background-repeat: no-repeat;   
-    -fx-background-position: center center;
-    -fx-background-color: transparent;
-    -fx-scale-y: 0.8;
-}
-.filter-button-node:hover {
-    -fx-background-image: url('funnel-pencil-icon.png');
-}
-.filter-button-node.active{
-    -fx-background-image: url('funnel-active-icon.png');
-}
-.filter-button-node.active:hover {
-    -fx-background-image: url('funnel-pencil-active-icon.png');
-}
-.filter-button-node:focused {
-    -fx-background-insets: 0, 0, 1, 1;
-}
-
-/* don't know wa way to do this w/o knowing the table in advance */
-/*.column-header > .label {
-    -fx-content-display: graphic-only;
-}*/
 
 
 

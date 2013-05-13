@@ -129,15 +129,6 @@ extends TableView<S>
         });
     }
     
-    /*
-     * Load our custom CSS file to apply styling
-     */
-    @Override
-    protected String getUserAgentStylesheet() 
-    {
-        return FilteredTableView.class.getResource("filterableTableColumns.css").toExternalForm();
-    }
-    
     /**
      * @return Observable list containing any {@link AbstractFilterableTableColumn}'s that have a filter applied
      */

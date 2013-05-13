@@ -63,7 +63,7 @@ public interface IFilterEditor<R extends IFilterOperator<?>>
     /**
      * @return The menu used to change the filter
      */
-    abstract public FilterContextMenu getFilterMenu();
+    abstract public FilterMenuPopup getFilterMenu();
     
     /**
      * @return Property identifying if there is a filter set

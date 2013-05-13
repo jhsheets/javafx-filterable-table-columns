@@ -26,9 +26,18 @@
 package org.google.jhsheets.filtered.tablecolumn.editor;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
-import org.google.jhsheets.filtered.control.CheckBoxMenuItem;
+import javafx.scene.control.Control;
+import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+
 import org.google.jhsheets.filtered.operators.EnumOperator;
 
 /**
@@ -40,12 +49,13 @@ extends AbstractFilterEditor<EnumOperator<T>>
 {
     private boolean[] previousSelections;
     
-    private List<CheckBox> enumCombos;
+    private ObservableList<CheckBox> enumCombos;
     
     
     public EnumFilterEditor(String title, T[] values)
     {
         super(title);
+        this.enumCombos = FXCollections.observableArrayList();
         populateMenuItems(values);
     }
     
@@ -53,21 +63,52 @@ extends AbstractFilterEditor<EnumOperator<T>>
     {
         final int len = values == null ? 0 : values.length;
         this.previousSelections = new boolean[len];
-        this.enumCombos = new ArrayList<>(len);
         
-        clearFilterMenuItems();
-        final List<CheckBoxMenuItem> menuItems = new ArrayList<>(len);
-        if (values != null)
-        {
-            for (T value : values)
-            {
-                final CheckBox ecb = new CheckBox(value.toString());
-                ecb.setUserData(value);
-                enumCombos.add(ecb);
-                menuItems.add(new CheckBoxMenuItem(ecb));
-            }
-        }
-        addFilterMenuItems(menuItems);
+        this.enumCombos.clear();
+		if (values != null) 
+		{
+			for (T value : values) 
+			{
+				final CheckBox ecb = new CheckBox(value.toString());
+				ecb.setUserData(value);
+				enumCombos.add(ecb);
+			}
+		}
+        
+        final ListView<CheckBox> list = new ListView<CheckBox>(enumCombos);
+		list.setEditable(false);
+		list.setMaxHeight(215);
+		list.setMaxWidth(400);
+		list.setPrefWidth(200);
+		list.setPrefHeight(25 * Math.max(enumCombos.size(), 2)); 
+		list.getItems().addListener(new ListChangeListener<Control>() {
+			@Override
+			public void onChanged(ListChangeListener.Change<? extends Control> c) {
+				final int items = c.getList().size();
+				list.setPrefHeight( 25 * Math.max(items, 2));
+			}       
+		});
+		// We don't allow edit mode, so we can let escape key events bubble to the popup
+		list.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					list.getScene().getWindow().hide();
+				}
+			}
+		});
+		// Checkbox doesn't fill the entire cell. Change selection on clicks outside the checkbox
+		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				CheckBox cb = list.getSelectionModel().getSelectedItem();
+				if (cb != null) {
+					cb.setSelected( !cb.isSelected() );
+					cb.requestFocus();
+				}
+			}
+		});
+		setFilterMenuContent(list);
     }
     
     @SuppressWarnings("unchecked")

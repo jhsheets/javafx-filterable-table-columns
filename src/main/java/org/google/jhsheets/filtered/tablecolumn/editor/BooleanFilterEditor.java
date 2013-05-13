@@ -26,8 +26,12 @@
 package org.google.jhsheets.filtered.tablecolumn.editor;
 
 import java.util.ArrayList;
-import javafx.scene.control.ComboBox;
-import org.google.jhsheets.filtered.control.ComboBoxMenuItem;
+
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.VBox;
+
 import org.google.jhsheets.filtered.operators.BooleanOperator;
 
 /**
@@ -40,7 +44,7 @@ extends AbstractFilterEditor<BooleanOperator>
 
     private BooleanOperator.Type previousType;
     
-    private final ComboBox<BooleanOperator.Type> typeBox;
+    private final ToggleGroup typeGroup = new ToggleGroup();
     
     private final BooleanOperator.Type DEFAULT_TYPE;
     
@@ -55,23 +59,32 @@ extends AbstractFilterEditor<BooleanOperator>
         
         DEFAULT_TYPE = BooleanOperator.Type.NONE;
         
-        typeBox = new ComboBox<>();
+        final RadioButton rbNone = new RadioButton(BooleanOperator.Type.NONE.toString());
+        rbNone.setUserData(BooleanOperator.Type.NONE);
+        rbNone.setToggleGroup(typeGroup);
         
-        final ComboBoxMenuItem typeItem = new ComboBoxMenuItem(typeBox);
+        final RadioButton rbTrue = new RadioButton(BooleanOperator.Type.TRUE.toString());
+        rbTrue.setUserData(BooleanOperator.Type.TRUE);
+        rbTrue.setToggleGroup(typeGroup);
         
-        addFilterMenuItem(typeItem);
+        final RadioButton rbFalse = new RadioButton(BooleanOperator.Type.FALSE.toString());
+        rbFalse.setUserData(BooleanOperator.Type.FALSE);
+        rbFalse.setToggleGroup(typeGroup);
         
-        previousType = DEFAULT_TYPE;
+        setSelectedToggle(DEFAULT_TYPE);
         
-        typeBox.getSelectionModel().select(DEFAULT_TYPE);
-        typeBox.getItems().addAll(types);
+        final VBox box = new VBox();
+        box.setSpacing(4);
+        box.getChildren().addAll(rbNone, rbTrue, rbFalse);
+        
+        setFilterMenuContent(box);
     }
     
     @Override
     public BooleanOperator[] getFilters() throws Exception 
     {
         final ArrayList<BooleanOperator> retList = new ArrayList<>();
-        final BooleanOperator.Type selectedType = typeBox.getSelectionModel().getSelectedItem();
+        final BooleanOperator.Type selectedType = (BooleanOperator.Type)typeGroup.getSelectedToggle().getUserData();
         if (selectedType == BooleanOperator.Type.NONE)
         {
             retList.add(new BooleanOperator(selectedType, null) );
@@ -86,7 +99,7 @@ extends AbstractFilterEditor<BooleanOperator>
     @Override
     public void cancel()
     {
-        typeBox.getSelectionModel().select(previousType);
+    	setSelectedToggle(previousType);
     }
 
     @Override
@@ -94,15 +107,15 @@ extends AbstractFilterEditor<BooleanOperator>
     {
         boolean changed = false;
         
-        final BooleanOperator.Type selectedType = typeBox.getSelectionModel().getSelectedItem();
+        final BooleanOperator.Type selectedType = (BooleanOperator.Type)typeGroup.getSelectedToggle().getUserData();
         if (selectedType == DEFAULT_TYPE)
         {
             changed = clear();
         }
         else
         {
-            changed = previousType != typeBox.getSelectionModel().getSelectedItem();
-            previousType = typeBox.getSelectionModel().getSelectedItem();
+            changed = previousType != selectedType;
+            previousType = selectedType;
             setFiltered(true);
         }
         
@@ -115,7 +128,7 @@ extends AbstractFilterEditor<BooleanOperator>
         boolean changed = false;
         
         previousType = DEFAULT_TYPE;
-        typeBox.getSelectionModel().select(DEFAULT_TYPE);
+        setSelectedToggle(DEFAULT_TYPE);
         
         if (isFiltered())
         {
@@ -124,6 +137,19 @@ extends AbstractFilterEditor<BooleanOperator>
         }
         
         return changed;
+    }
+    
+    private void setSelectedToggle(BooleanOperator.Type type)
+    {
+    	for (Toggle t : typeGroup.getToggles())
+    	{
+    		final BooleanOperator.Type tmp = (BooleanOperator.Type)t.getUserData();
+    		if (type == tmp)
+    		{
+    			t.setSelected(true);
+    			break;
+    		}
+    	}
     }
     
 }

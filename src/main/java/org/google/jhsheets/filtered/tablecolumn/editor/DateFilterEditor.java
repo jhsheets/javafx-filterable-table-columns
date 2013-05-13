@@ -32,9 +32,12 @@ import java.util.Date;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
-import org.google.jhsheets.filtered.control.ComboBoxMenuItem;
-import org.google.jhsheets.filtered.control.DateMenuItem;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+
 import org.google.jhsheets.filtered.operators.DateOperator;
 
 /**
@@ -73,6 +76,10 @@ extends AbstractFilterEditor<DateOperator>
         
         picker1 = new Picker(dateFormat, set1.toArray(new DateOperator.Type[0]));
         picker2 = new Picker(dateFormat, set2.toArray(new DateOperator.Type[0]));
+        
+        final VBox box = new VBox();
+        box.getChildren().addAll(picker1.box, picker2.box);
+        setFilterMenuContent(box);
         
         // Disable the 2nd picker if the 1st picker isn't the start of a range
         picker2.setEnabled(false);
@@ -181,7 +188,8 @@ extends AbstractFilterEditor<DateOperator>
         
         private Date previousDate = DEFAULT_DATE;
         private DateOperator.Type previousType = DEFAULT_TYPE;
-
+        
+        private final GridPane box = new GridPane();
         private final DatePicker datePicker;
         private final ComboBox<DateOperator.Type> typeBox;
         
@@ -190,9 +198,9 @@ extends AbstractFilterEditor<DateOperator>
             datePicker = new DatePicker();
             datePicker.setSelectedDate(DEFAULT_DATE);
             datePicker.setDateFormat(new SimpleDateFormat(dateFormat));
-            final DateMenuItem textItem = new DateMenuItem(datePicker);
             
             typeBox = new ComboBox<>();
+            typeBox.setMaxWidth(Double.MAX_VALUE);
             typeBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DateOperator.Type>() {
                 @Override
                 public void changed(ObservableValue<? extends DateOperator.Type> ov, DateOperator.Type old, DateOperator.Type newVal) {
@@ -201,10 +209,19 @@ extends AbstractFilterEditor<DateOperator>
             });
             typeBox.getSelectionModel().select(DEFAULT_TYPE);
             typeBox.getItems().addAll(choices);
-            final ComboBoxMenuItem typeItem = new ComboBoxMenuItem(typeBox);
             
-            DateFilterEditor.this.addFilterMenuItem(typeItem);
-            DateFilterEditor.this.addFilterMenuItem(textItem);
+            GridPane.setRowIndex(typeBox, 0);
+            GridPane.setColumnIndex(typeBox, 0);
+            GridPane.setMargin(typeBox, new Insets(4, 0, 0, 0));
+            GridPane.setRowIndex(datePicker, 1);
+            GridPane.setColumnIndex(datePicker, 0);
+            GridPane.setMargin(datePicker, new Insets(4, 0, 0, 0));
+            final ColumnConstraints boxConstraint = new ColumnConstraints();
+            boxConstraint.setPercentWidth(100);
+            box.getColumnConstraints().addAll(boxConstraint);
+            box.getChildren().addAll(typeBox, datePicker);
+            
+            setFilterMenuContent(box);
         }
         
         public void setEnabled(boolean enable)

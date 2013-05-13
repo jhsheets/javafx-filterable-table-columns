@@ -25,27 +25,32 @@
  */
 package org.google.jhsheets.filtered.tablecolumn.editor;
 
-import java.util.Collection;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
-import javafx.scene.control.MenuItem;
+import javafx.scene.Node;
 import javafx.stage.WindowEvent;
+
 import org.google.jhsheets.filtered.operators.IFilterOperator;
 
 /**
- *
+ * This base class has default methods used to determine whether or not there
+ * are filters applied to the table column this editor belongs to.  It also
+ * stores a reference to the {@link FilterMenuPopup} used to display filters.
+ * 
+ * @see IFilterEditor
+ * 
  * @author JHS
  */
 public abstract class AbstractFilterEditor<R extends IFilterOperator<?>>
 implements IFilterEditor<R>
 {
-    private FilterContextMenu menu;
+    private FilterMenuPopup menu;
     private SimpleBooleanProperty filtered;
     
     public AbstractFilterEditor(String title)
     {
-        menu = new FilterContextMenu(title);
+        menu = new FilterMenuPopup(title);
         filtered = new SimpleBooleanProperty(false);
         
         menu.setOnHidden(new EventHandler<WindowEvent>() {
@@ -57,32 +62,18 @@ implements IFilterEditor<R>
     }
     
     @Override
-    public FilterContextMenu getFilterMenu()
+    public FilterMenuPopup getFilterMenu()
     {
         return menu;
     }
     
     /**
-     * Adds an item to the filter editor
-     * @param item
+     * Sets the content to display in the filter menu
+     * @param node
      */
-    public void addFilterMenuItem(MenuItem item)
+    public void setFilterMenuContent(Node node)
     {
-        menu.addFilterMenuItem(item);
-    }
-    
-    /**
-     * Adds all items to the filter editor, in the supplied order
-     * @param items 
-     */
-    public void addFilterMenuItems(Collection<? extends MenuItem> items)
-    {
-        menu.addFilterMenuItems(items);
-    }
-    
-    public void clearFilterMenuItems()
-    {
-        menu.clearFilterMenuItems();
+        menu.setContentNode(node);
     }
     
     @Override

@@ -26,12 +26,15 @@
 package org.google.jhsheets.filtered.tablecolumn.editor;
 
 import java.util.ArrayList;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import org.google.jhsheets.filtered.control.ComboBoxMenuItem;
-import org.google.jhsheets.filtered.control.TextFieldMenuItem;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+
 import org.google.jhsheets.filtered.operators.StringOperator;
 
 /**
@@ -65,16 +68,25 @@ extends AbstractFilterEditor<StringOperator>
         textField = new TextField();
         typeBox = new ComboBox<>();
         
-        final ComboBoxMenuItem typeItem = new ComboBoxMenuItem(typeBox);
-        final TextFieldMenuItem textItem = new TextFieldMenuItem(textField);
+        final GridPane box = new GridPane();
+        GridPane.setRowIndex(typeBox, 0);
+        GridPane.setColumnIndex(typeBox, 0);
+        GridPane.setRowIndex(textField, 1);
+        GridPane.setColumnIndex(textField, 0);
+        GridPane.setMargin(typeBox, new Insets(4, 0, 0, 0));
+        GridPane.setMargin(textField, new Insets(4, 0, 0, 0));
+        final ColumnConstraints boxConstraint = new ColumnConstraints();
+        boxConstraint.setPercentWidth(100);
+        box.getColumnConstraints().addAll(boxConstraint);
+        box.getChildren().addAll(typeBox, textField);
         
-        addFilterMenuItem(typeItem);
-        addFilterMenuItem(textItem);
+        setFilterMenuContent(box);
         
         previousText = DEFAULT_TEXT;
         previousType = DEFAULT_TYPE;
         
         typeBox.getSelectionModel().select(DEFAULT_TYPE);
+        typeBox.setMaxWidth(Double.MAX_VALUE);
         typeBox.getItems().addAll(types);
         typeBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StringOperator.Type>() {
             @Override

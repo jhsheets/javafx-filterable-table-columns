@@ -26,17 +26,15 @@
 package org.google.jhsheets.filtered.tablecolumn;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Side;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+
 import org.google.jhsheets.filtered.operators.IFilterOperator;
+import org.google.jhsheets.filtered.tablecolumn.editor.FilterMenuButton;
 import org.google.jhsheets.filtered.tablecolumn.editor.IFilterEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,33 +63,7 @@ implements IFilterableTableColumn<R, M>
         this.filterResults = FXCollections.observableArrayList();
         
         // Display a button on the column to show the menu
-        final Button filterTrigger = new Button();
-        filterTrigger.getStyleClass().add("filter-button-node"); 
-        filterTrigger.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (getContextMenu().isShowing()) 
-                {
-                    getContextMenu().hide();
-                }
-                else 
-                {
-                    getContextMenu().show(filterTrigger, Side.BOTTOM, 0, 0);
-                }
-            }
-        });
-        
-        // Change the filter button icon based on filtered status
-        filteredProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) {
-                if (newVal == Boolean.TRUE) {
-                    filterTrigger.getStyleClass().add("active");
-                } else {
-                    filterTrigger.getStyleClass().remove("active");
-                }
-            }
-        });  
+        setGraphic(new FilterMenuButton(filterEditor.getFilterMenu()));
         
         // I'd love to do this, but you have to set the content to GRAPHIC_ONLY, but there's
         // no way to do that as the header skin is part of the table, not the column
@@ -102,10 +74,7 @@ implements IFilterableTableColumn<R, M>
         //pane.setCenter(lbl);
         //setGraphic(pane);
         
-        setGraphic(filterTrigger);
-        setContextMenu(filterEditor.getFilterMenu());
-        
-        filterEditor.getFilterMenu().setClearEvent(new EventHandler<ActionEvent>() 
+        filterEditor.getFilterMenu().setResetEvent(new EventHandler<ActionEvent>() 
         {
             @Override
             public void handle(ActionEvent t) 
@@ -123,7 +92,7 @@ implements IFilterableTableColumn<R, M>
                         
                         Event.fireEvent(AbstractFilterableTableColumn.this, e);
                     }
-                    getContextMenu().hide();
+                    filterEditor.getFilterMenu().hide();
                 } 
                 catch (Exception ex) 
                 {
@@ -151,7 +120,7 @@ implements IFilterableTableColumn<R, M>
                         
                         Event.fireEvent(AbstractFilterableTableColumn.this, e);
                     }
-                    getContextMenu().hide();
+                    filterEditor.getFilterMenu().hide();
                 }
                 catch (Exception ex)
                 {

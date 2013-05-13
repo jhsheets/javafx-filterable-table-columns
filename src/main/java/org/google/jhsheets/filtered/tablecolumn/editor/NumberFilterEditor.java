@@ -31,10 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import org.google.jhsheets.filtered.control.ComboBoxMenuItem;
-import org.google.jhsheets.filtered.control.TextFieldMenuItem;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+
 import org.google.jhsheets.filtered.operators.NumberOperator;
 
 /**
@@ -64,6 +67,10 @@ extends AbstractFilterEditor<NumberOperator<T>>
         
         picker1 = new Picker(set1.toArray(new NumberOperator.Type[0]));
         picker2 = new Picker(set2.toArray(new NumberOperator.Type[0]));
+        
+        final VBox box = new VBox();
+        box.getChildren().addAll(picker1.box, picker2.box);
+        setFilterMenuContent(box);
         
         // Disable the 2nd picker if the 1st picker isn't the start of a range
         picker2.setEnabled(false);
@@ -165,16 +172,17 @@ extends AbstractFilterEditor<NumberOperator<T>>
         
         private String previousText = DEFAULT_TEXT;
         private NumberOperator.Type previousType = DEFAULT_TYPE;
-
+        
+        final GridPane box = new GridPane();
         private final TextField textField;
         private final ComboBox<NumberOperator.Type> typeBox;
         
         private Picker(NumberOperator.Type[] choices)
         {    
             textField = new TextField(DEFAULT_TEXT);
-            final TextFieldMenuItem textItem = new TextFieldMenuItem(textField);
             
             typeBox = new ComboBox<>();
+            typeBox.setMaxWidth(Double.MAX_VALUE);
             typeBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<NumberOperator.Type>() {
                 @Override
                 public void changed(ObservableValue<? extends NumberOperator.Type> ov, NumberOperator.Type old, NumberOperator.Type newVal) {
@@ -183,10 +191,19 @@ extends AbstractFilterEditor<NumberOperator<T>>
             });
             typeBox.getSelectionModel().select(DEFAULT_TYPE);
             typeBox.getItems().addAll(choices);
-            final ComboBoxMenuItem typeItem = new ComboBoxMenuItem(typeBox);
-        
-            NumberFilterEditor.this.addFilterMenuItem(typeItem);
-            NumberFilterEditor.this.addFilterMenuItem(textItem);
+            
+            GridPane.setRowIndex(typeBox, 0);
+            GridPane.setColumnIndex(typeBox, 0);
+            GridPane.setMargin(typeBox, new Insets(4, 0, 0, 0));
+            GridPane.setRowIndex(textField, 1);
+            GridPane.setColumnIndex(textField, 0);
+            GridPane.setMargin(textField, new Insets(4, 0, 0, 0));
+            final ColumnConstraints boxConstraint = new ColumnConstraints();
+            boxConstraint.setPercentWidth(100);
+            box.getColumnConstraints().addAll(boxConstraint);
+            box.getChildren().addAll(typeBox, textField);
+            
+            setFilterMenuContent(box);
         }
         
         public void setEnabled(boolean enable)
