@@ -78,12 +78,13 @@ extends AbstractFilterEditor<NumberOperator<T>>
         box.getChildren().addAll(picker1.box, picker2.box);
         setFilterMenuContent(box);
         
-        // Disable the 2nd picker if the 1st picker isn't the start of a range
+        // Disable the 2nd picker if the 1st picker isn't of a range
         picker2.setEnabled(false);
         picker1.typeBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<NumberOperator.Type>() {
             @Override
             public void changed(ObservableValue<? extends NumberOperator.Type> ov, NumberOperator.Type old, NumberOperator.Type newVal) {
-                picker2.setEnabled(newVal.equals(NumberOperator.Type.GREATERTHAN) || newVal.equals(NumberOperator.Type.GREATERTHANEQUALS));
+                picker2.setEnabled(newVal.equals(NumberOperator.Type.GREATERTHAN) || newVal.equals(NumberOperator.Type.GREATERTHANEQUALS)
+                		|| newVal.equals(NumberOperator.Type.LESSTHAN) || newVal.equals(NumberOperator.Type.LESSTHANEQUALS));
             }
         });
     }
@@ -95,15 +96,13 @@ extends AbstractFilterEditor<NumberOperator<T>>
         for (NumberOperator.Type type : types)
         {
             // Only these range types should show up in 2nd picker
-            if (type.equals(NumberOperator.Type.LESSTHAN) || type.equals(NumberOperator.Type.LESSTHANEQUALS))
+            if (type.equals(NumberOperator.Type.GREATERTHAN) || type.equals(NumberOperator.Type.GREATERTHANEQUALS)
+            || type.equals(NumberOperator.Type.LESSTHAN) || type.equals(NumberOperator.Type.LESSTHANEQUALS))
             {
                 if (!set2.contains(type)) set2.add(type);
             }
-            // Everything else but above types should show up in 1st picker
-            else
-            {
-                if (!set1.contains(type)) set1.add(type);
-            }
+            
+            if (!set1.contains(type)) set1.add(type);
         }
     }
     

@@ -87,12 +87,13 @@ extends AbstractFilterEditor<DateOperator>
         box.getChildren().addAll(picker1.box, picker2.box);
         setFilterMenuContent(box);
         
-        // Disable the 2nd picker if the 1st picker isn't the start of a range
+        // Disable the 2nd picker if the 1st picker isn't of a range
         picker2.setEnabled(false);
         picker1.typeBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DateOperator.Type>() {
             @Override
             public void changed(ObservableValue<? extends DateOperator.Type> ov, DateOperator.Type old, DateOperator.Type newVal) {
-                picker2.setEnabled(newVal.equals(DateOperator.Type.AFTER) || newVal.equals(DateOperator.Type.AFTERON));
+                picker2.setEnabled(newVal.equals(DateOperator.Type.BEFORE) || newVal.equals(DateOperator.Type.BEFOREON)
+                		|| newVal.equals(DateOperator.Type.AFTER) || newVal.equals(DateOperator.Type.AFTERON));
             }
         });
     }
@@ -104,15 +105,13 @@ extends AbstractFilterEditor<DateOperator>
         for (DateOperator.Type type : types)
         {
             // Only these range types should show up in 2nd picker
-            if (type.equals(DateOperator.Type.BEFORE) || type.equals(DateOperator.Type.BEFOREON))
+            if (type.equals(DateOperator.Type.BEFORE) || type.equals(DateOperator.Type.BEFOREON)
+            || type.equals(DateOperator.Type.AFTER) || type.equals(DateOperator.Type.AFTERON))
             {
                 if (!set2.contains(type)) set2.add(type);
             }
-            // Everything else but above types should show up in 1st picker
-            else
-            {
-                if (!set1.contains(type)) set1.add(type);
-            }
+            
+            if (!set1.contains(type)) set1.add(type);
         }
     }
     
