@@ -6,9 +6,15 @@
     <groupId>org.google.jhsheets</groupId>
     <artifactId>FilterableTableColumns</artifactId>
     <name>FilterableTableColumns</name>
+    <developers>
+    	<developer>
+    		<name>James Sheets</name>
+    		<email>jhsheets@gmail.com</email>
+    	</developer>
+    </developers>
 
     <packaging>jar</packaging>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.9.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,7 +48,6 @@
             </plugin>
         </plugins>
     </build>
-
 
     <dependencies>
         <dependency>
