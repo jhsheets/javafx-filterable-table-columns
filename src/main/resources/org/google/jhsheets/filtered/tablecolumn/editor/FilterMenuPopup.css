@@ -54,6 +54,20 @@
 	-fx-padding: 6 0 0 0;
 }
 
+/* Make it easier to distinguish enabled textfields from disabled ones */
+.filter-popup-menu .content .text-field
+{
+	-fx-background-color: derive(-fx-shadow-highlight-color,-15%), derive(-fx-text-box-border,-30%), -fx-control-inner-background;
+}
+.filter-popup-menu .content .text-field:focused
+{
+	-fx-background-color: -fx-focus-color, -fx-text-box-border, -fx-control-inner-background;
+}
+.filter-popup-menu .content .text-field:disabled
+{
+	-fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, derive(-fx-control-inner-background,-1%);
+}
+
 .filter-popup-menu .content .bottom .separator
 {
 	-fx-padding: 0 0 5 0;
