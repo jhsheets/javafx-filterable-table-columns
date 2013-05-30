@@ -62,6 +62,9 @@ implements IFilterableTableColumn<R, M>
         this.filterEditor = filterEditor;
         this.filterResults = FXCollections.observableArrayList();
         
+        // Keep the popup menu's title synced with the column title
+        filterEditor.getFilterMenu().titleProperty().bind(AbstractFilterableTableColumn.this.textProperty());
+        
         // Display a button on the column to show the menu
         setGraphic(new FilterMenuButton(filterEditor.getFilterMenu()));
         

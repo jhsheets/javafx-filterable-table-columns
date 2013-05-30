@@ -52,7 +52,7 @@ extends Button
 	{
 		getStyleClass().add("filter-menu-button");
 		
-		// When the active propery is true, append an active class to this button
+		// When the active property is true, append an active class to this button
 		active.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) {
