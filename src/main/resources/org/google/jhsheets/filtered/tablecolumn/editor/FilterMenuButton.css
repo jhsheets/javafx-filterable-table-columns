@@ -8,7 +8,7 @@
 .filter-menu-button:hover {
     -fx-background-image: url('funnel-pencil-icon.png');
 }
-.filter-menu-button.active{
+.filter-menu-button.active {
     -fx-background-image: url('funnel-active-icon.png');
 }
 .filter-menu-button.active:hover {
