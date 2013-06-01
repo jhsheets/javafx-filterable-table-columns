@@ -25,6 +25,8 @@
  */
 package org.google.jhsheets.filtered.tablecolumn.editor;
 
+import com.sun.javafx.css.StyleManager;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -46,6 +48,10 @@ import javafx.stage.Window;
 public class FilterMenuButton 
 extends Button
 {
+	static {
+        StyleManager.getInstance().addUserAgentStylesheet(FilterMenuButton.class.getResource(FilterMenuButton.class.getSimpleName() + ".css").toString());
+    }
+	
 	private final SimpleBooleanProperty active = new SimpleBooleanProperty();
 	
 	public FilterMenuButton(final FilterMenuPopup popup)
@@ -85,11 +91,6 @@ extends Button
 			}
 		});
 		
-	}
-	
-	public String getUserAgentStylesheet()
-	{
-		return FilterMenuButton.class.getResource(FilterMenuButton.class.getSimpleName() + ".css").toString();
 	}
 	
 	public SimpleBooleanProperty activeProperty()
