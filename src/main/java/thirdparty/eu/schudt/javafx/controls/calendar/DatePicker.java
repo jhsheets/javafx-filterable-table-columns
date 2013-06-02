@@ -202,6 +202,7 @@ public class DatePicker extends HBox {
             }
         });
         
+        getStyleClass().add("calendar-editor");
         getChildren().add(textField);
         getChildren().add(button);
     }
