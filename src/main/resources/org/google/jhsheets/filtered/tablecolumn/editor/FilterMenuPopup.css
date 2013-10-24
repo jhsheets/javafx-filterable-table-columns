@@ -3,41 +3,43 @@
  * http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
  * https://code.google.com/p/javafx-demos/source/browse/trunk/javafx-demos/src/main/resources/styles/caspian/caspian_2.1_GA.css?r=17
  * https://bitbucket.org/openjfxmirrors/openjfx-8-graphics-rt/src/3408eed98c2c/javafx-ui-controls/src/javafx/scene/control?at=default
+ * http://harmoniccode.blogspot.com/2013/05/css-confusing-style-sheets.html
  */
 
 .filter-popup-menu
 {
-	-fx-skin: "org.google.jhsheets.filtered.tablecolumn.editor.FilterMenuPopupSkin";
+	/*-fx-skin: "org.google.jhsheets.filtered.tablecolumn.editor.FilterMenuPopupSkin";*/
 }
 
 /* Get rid of the border around the list-view */
-.filter-popup-menu .content .list-view
+.filter-popup-menu .content > .list-view
 {
 	-fx-background-color: transparent;
+	-fx-focus-traversable: false;
 }
 
 /* Get rid of cell coloring */
-.filter-popup-menu .content .list-view .list-cell:even
-, .filter-popup-menu .content .list-view .list-cell:odd
+.filter-popup-menu .content > .list-view .list-cell:even
+, .filter-popup-menu .content > .list-view .list-cell:odd
 {
 	-fx-background-color: transparent;
 }
 
 /* Color list cell background hover */
-.filter-popup-menu .content .list-view .list-cell:filled:hover
+.filter-popup-menu .content > .list-view .list-cell:filled:hover
 {
     -fx-background: -fx-accent;
     -fx-background-color: -fx-selection-bar;
     -fx-background-insets: 0 0 0 0;
 }
 
-.filter-popup-menu .content .list-view .list-cell:filled .check-box
+.filter-popup-menu .content > .list-view .list-cell:filled .check-box
 {
 	-fx-text-fill: black;
 }
 
 /* Color list cell foreground on hover */
-.filter-popup-menu .content .list-view .list-cell:filled:hover .check-box
+.filter-popup-menu .content > .list-view .list-cell:filled:hover .check-box
 {
 	-fx-text-fill: white;
 }
@@ -55,15 +57,15 @@
 }
 
 /* Make it easier to distinguish enabled textfields from disabled ones */
-.filter-popup-menu .content .text-field
+.filter-popup-menu .content > .text-field
 {
 	-fx-background-color: derive(-fx-shadow-highlight-color,-15%), derive(-fx-text-box-border,-30%), -fx-control-inner-background;
 }
-.filter-popup-menu .content .text-field:focused
+.filter-popup-menu .content > .text-field:focused
 {
 	-fx-background-color: -fx-focus-color, -fx-text-box-border, -fx-control-inner-background, transparent;
 }
-.filter-popup-menu .content .text-field:disabled
+.filter-popup-menu .content > .text-field:disabled
 {
 	-fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, derive(-fx-control-inner-background,-1%);
 }
@@ -86,7 +88,7 @@
 
 .filter-popup-menu .content .top .label
 {
-	-fx-background-color: linear-gradient(derive(-fx-control-inner-background, -2%), derive(-fx-control-inner-background, -9%));
+	-fx-background-color: -fx-control-inner-background;
     -fx-background-radius: 5,5,5,5;
     -fx-text-fill: black;
     -fx-font-weight: bold;
