@@ -69,7 +69,7 @@ extends AbstractFilterEditor<DateOperator>
     
     public DateFilterEditor(String title, String dateFormat, EnumSet<DateOperator.Type> types)
     {
-    	this(title, "yyyy-MM-dd HH:mm", types.toArray(new DateOperator.Type[0]));
+    	this(title, dateFormat, types.toArray(new DateOperator.Type[0]));
     }
     
     public DateFilterEditor(String title, String dateFormat, DateOperator.Type[] types)
