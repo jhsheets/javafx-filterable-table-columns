@@ -82,6 +82,8 @@ public class FilterGuiExample extends Application {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
                             setText(sdf.format(item));
+                        } else {
+                            setText(null);
                         }
                     }
                 };
