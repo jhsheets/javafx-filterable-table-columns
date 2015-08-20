@@ -8,9 +8,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -110,8 +112,10 @@ public class FilterGuiExample extends Application {
                 applyFilters();
             }
         });
-        
-        primaryStage.setScene(new Scene(filteredTable, 600, 200));
+
+        BorderPane pane = new BorderPane(filteredTable);
+        pane.setTop(new Label("Filtering only works on the ID column in this demo."));
+        primaryStage.setScene(new Scene(pane, 600, 200));
         primaryStage.show();  
     }
     

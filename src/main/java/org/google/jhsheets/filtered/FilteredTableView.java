@@ -101,18 +101,7 @@ extends TableView<S>
             public void onChanged(Change<? extends TableColumn<?,?>> change) 
             {
                 change.next();// must advance to next change, for whatever reason...
-                if (change.wasAdded())
-                {
-                    for (final TableColumn<?,?> col : change.getAddedSubList())
-                    {
-                        if (col instanceof AbstractFilterableTableColumn)
-                        {
-                            logger.debug(String.format("Now listening for filter changes on column: %s", col.getText()));
-                            final AbstractFilterableTableColumn<?,?,?,?> fcol = (AbstractFilterableTableColumn<?,?,?,?>)col;
-                            fcol.addEventHandler(ColumnFilterEvent.FILTER_CHANGED_EVENT, columnFilteredEventHandler);
-                        }
-                    }
-                }
+                // Drag-n-dropping a column fires a remove and an add.
                 if (change.wasRemoved())
                 {
                     for (final TableColumn<?,?> col : change.getAddedSubList())
@@ -122,6 +111,18 @@ extends TableView<S>
                             logger.debug(String.format("No longer listening for filter changes on column: %s", col.getText()));
                             final AbstractFilterableTableColumn<?,?,?,?> fcol = (AbstractFilterableTableColumn<?,?,?,?>)col;
                             fcol.removeEventHandler(ColumnFilterEvent.FILTER_CHANGED_EVENT, columnFilteredEventHandler);
+                        }
+                    }
+                }
+                if (change.wasAdded())
+                {
+                    for (final TableColumn<?,?> col : change.getAddedSubList())
+                    {
+                        if (col instanceof AbstractFilterableTableColumn)
+                        {
+                            logger.debug(String.format("Now listening for filter changes on column: %s", col.getText()));
+                            final AbstractFilterableTableColumn<?,?,?,?> fcol = (AbstractFilterableTableColumn<?,?,?,?>)col;
+                            fcol.addEventHandler(ColumnFilterEvent.FILTER_CHANGED_EVENT, columnFilteredEventHandler);
                         }
                     }
                 }
