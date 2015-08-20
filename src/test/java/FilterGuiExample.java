@@ -43,8 +43,8 @@ public class FilterGuiExample extends Application {
         launch(args);
     }
     
-	@Override
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void start(Stage primaryStage) 
     {
         // The FilteredTableView makes it easier to receive notifications of changes to the column filters
@@ -64,6 +64,8 @@ public class FilterGuiExample extends Application {
         // Don't let the name fool you, you can pass in any type of object you'd like
         // The toString() method will be called, and used to display the filter menus
         typeColumn = new FilterableEnumTableColumn<>("Type", ExampleType.values());
+        typeColumn.showToggleAll(true);
+        typeColumn.selectByDefault(true);
         typeColumn.setPrefWidth(90);
         typeColumn.setCellValueFactory(new PropertyValueFactory("type"));
         
@@ -72,22 +74,23 @@ public class FilterGuiExample extends Application {
         dateColumn.setPrefWidth(130);
         dateColumn.setCellValueFactory(new PropertyValueFactory("date"));
         dateColumn.setCellFactory(new Callback<TableColumn<ExampleItem,Date>, TableCell<ExampleItem,Date>>() {
-			@Override
-			public TableCell<ExampleItem, Date> call(TableColumn<ExampleItem, Date> param) {
-				return new TableCell<ExampleItem, Date>() {
-					final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	                @Override
-	                public void updateItem(Date item, boolean empty) {
-	                    super.updateItem(item, empty);
-	                    if (!isEmpty()) {
-	                        setText(sdf.format(item));
+            @Override
+            public TableCell<ExampleItem, Date> call(TableColumn<ExampleItem, Date> param) {
+                return new TableCell<ExampleItem, Date>() {
+                    final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                    @Override
+                    public void updateItem(Date item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            setText(sdf.format(item));
                         } else {
                             setText(null);
-	                    }
-	                }
-	            };
-			}
-		});
+                        }
+                    }
+                };
+            }
+        });
         
         // Allow a Boolean as a filter
         boolColumn = new FilterableBooleanTableColumn<>("Bool");
