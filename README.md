@@ -1,4 +1,6 @@
 # javafx-filterable-table-columns
+## Description
+Provides a set of JavaFX ```TableColumn```'s widgets that allow the user to create filters.  This library only concerns itself with the UI portion, leaving the filtering up to the user.
 
 ## Use
 Preferred Method
