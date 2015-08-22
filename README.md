@@ -2,7 +2,7 @@
 ## Description
 Provides a set of JavaFX ```TableColumn```'s widgets that allow the user to create filters.  This library only concerns itself with the UI portion, leaving the filtering up to the user.
 
-<img align="right" src="https://javafx-filterable-table-columns.googlecode.com/files/calendar-filter.png">
+<img align="right" width="200" src="https://javafx-filterable-table-columns.googlecode.com/files/calendar-filter.png">
 ![UI Example-1](https://javafx-filterable-table-columns.googlecode.com/files/demo.png)
 ![UI Example-2](https://javafx-filterable-table-columns.googlecode.com/files/text-filter.png)
 ![UI Example-3](https://javafx-filterable-table-columns.googlecode.com/files/enum-filter.png)
