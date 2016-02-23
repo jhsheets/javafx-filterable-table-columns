@@ -55,6 +55,6 @@ And add the dependency to your pom.xml file
 <dependency>
     <groupId>com.github.jhsheets</groupId>
     <artifactId>javafx-filterable-table-columns</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 </dependency>
 ```
