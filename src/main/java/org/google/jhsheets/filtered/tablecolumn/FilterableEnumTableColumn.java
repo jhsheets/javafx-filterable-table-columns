@@ -52,11 +52,42 @@ extends AbstractFilterableTableColumn<S, T, EnumOperator<T>, EnumFilterEditor<T>
     
     public FilterableEnumTableColumn(String text, T[] enumValues)
     {
-        super(text, new EnumFilterEditor<>(text, enumValues));
+        this(text, enumValues, false);
+    }
+    
+    public FilterableEnumTableColumn(String text, T[] enumValues, boolean selectedByDefault)
+    {
+        this(text, enumValues, false, false);
+    }
+    
+    public FilterableEnumTableColumn(String text, T[] enumValues, boolean selectedByDefault, boolean showToggle)
+    {
+        super(text, new EnumFilterEditor<>(text, enumValues, selectedByDefault, showToggle));
     }
     
     public void setEnumValues(T[] enumValues)
     {
         getFilterEditor().populateMenuItems(enumValues);
+    }
+    
+    /**
+     * Select items in the list by default, and when you press the RESET button.
+     * Calling this should not fire a filter change event.
+     * @param selected 
+     */
+    public void selectByDefault(boolean selected)
+    {
+        getFilterEditor().selectedByDefault(selected);
+        // This doesn't trigger a filter change event, so it's safe to call
+        getFilterEditor().toggleAll(selected);
+    }
+    
+    /**
+     * Show a check box that can be used to toggle the values of all other items in the list
+     * @param showToggle 
+     */
+    public void showToggleAll(boolean showToggle)
+    {
+        getFilterEditor().showToggleAll(showToggle);
     }
 }

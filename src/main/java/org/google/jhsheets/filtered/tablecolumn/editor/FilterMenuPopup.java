@@ -28,14 +28,23 @@ package org.google.jhsheets.filtered.tablecolumn.editor;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PopupControl;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Skin;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 
 import com.sun.javafx.css.StyleManager;
@@ -61,7 +70,7 @@ extends PopupControl
 	
 	private static FilterMenuPopup currentlyVisibleMenu;
 	
-    private final ObjectProperty<Node> contentNode;
+    private final ObjectProperty<Node> contentNode = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<Button> saveButton;
     private final SimpleObjectProperty<Button> resetButton;
     private final SimpleObjectProperty<Button> cancelButton;
@@ -84,8 +93,6 @@ extends PopupControl
 				}
 			}
 		};
-		
-		contentNode = new SimpleObjectProperty<>();
 		
     	this.title = new SimpleStringProperty(title);
 		
@@ -113,6 +120,8 @@ extends PopupControl
 		});
     	
     	getStyleClass().setAll(DEFAULT_STYLE_CLASS);
+    	
+    	setSkin(new FilterMenuPopupSkin2());
     }
     
     public ObjectProperty<Node> contentNodeProperty() 
@@ -243,5 +252,79 @@ extends PopupControl
             currentlyVisibleMenu.hide();
         }
         currentlyVisibleMenu = this;
+    }
+    
+    // XXX: I'm not sure how to set the skin properly for PopupControl in JavaFX 8; it somehow changed.
+    // Just making the skin a private class so I can use setSkin() is easier than trying to figure it out
+    // (I think you have to call -fx-skin on the CSSBridge somehow)
+    private class FilterMenuPopupSkin2 extends StackPane implements Skin<FilterMenuPopup>
+    {
+        public FilterMenuPopupSkin2()
+        {
+            final ContentStack contentStack = new ContentStack();
+            getChildren().add(contentStack);
+            
+            idProperty().bind( FilterMenuPopup.this.idProperty() );
+            styleProperty().bind( FilterMenuPopup.this.styleProperty() );
+            getStyleClass().setAll( FilterMenuPopup.this.getStyleClass() );
+        }
+
+        @Override
+        public FilterMenuPopup getSkinnable() 
+        {
+            return FilterMenuPopup.this;
+        }
+
+        @Override
+        public Node getNode() 
+        {
+            return this;
+        }
+
+        @Override
+        public void dispose() 
+        {
+        	getChildren().clear();
+        }
+        
+        class ContentStack extends BorderPane 
+        {
+            public ContentStack() 
+            {
+            	getStyleClass().add("content");
+            	
+            	final Label titleLabel = new Label();
+            	titleLabel.textProperty().bind(FilterMenuPopup.this.titleProperty());
+            	
+            	final StackPane topPane = new StackPane();
+            	topPane.getChildren().addAll(new Separator(), titleLabel);
+            	topPane.getStyleClass().add("top");
+            	setTop(topPane);
+            	
+            	FilterMenuPopup.this.contentNodeProperty().addListener(new ChangeListener<Node>() {
+            		@Override
+            		public void changed(ObservableValue<? extends Node> paramObservableValue,Node paramT1, Node paramT2) {
+            			paramT2.getStyleClass().add("center");
+            			setCenter(paramT2);
+            		}
+				});
+            	
+            	if (FilterMenuPopup.this.getContentNode() != null) 
+            		FilterMenuPopup.this.getContentNode().getStyleClass().add("center");
+            	setCenter(FilterMenuPopup.this.getContentNode());
+            	
+                final HBox buttons = new HBox();
+                buttons.getStyleClass().add("buttons");
+                buttons.setPrefWidth(USE_COMPUTED_SIZE);
+                buttons.setPrefHeight(USE_COMPUTED_SIZE);
+                buttons.setSpacing(4);
+                buttons.getChildren().addAll(FilterMenuPopup.this.getSaveButton(), FilterMenuPopup.this.getResetButton(), FilterMenuPopup.this.getCancelButton());
+                
+                final VBox bottom = new VBox();
+                bottom.getStyleClass().add("bottom");
+                bottom.getChildren().addAll(new Separator(), buttons);
+                setBottom(bottom);
+            }
+        }
     }
 }
