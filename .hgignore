@@ -1,7 +1,0 @@
-\.orig$
-\.orig\..*$
-\.chg\..*$
-\.rej$
-\.conflict\~$
-syntax: glob
-target/*
