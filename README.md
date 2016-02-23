@@ -41,3 +41,20 @@ Calendar widget code taken from Christian Schudt from http://myjavafx.blogspot.c
 
 ## Example
 There's an example GUI in the test folder that shows how to configure and setup a filterable table with a few different column types.
+
+## Download
+To download via maven, add the following to your settings.xml or pom.xml
+```xml
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
+```
+And add the dependency to your pom.xml file
+```xml
+<dependency>
+    <groupId>com.github.jhsheets</groupId>
+    <artifactId>javafx-filterable-table-columns</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+</dependency>
+```
