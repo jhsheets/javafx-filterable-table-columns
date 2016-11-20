@@ -2,11 +2,12 @@
 ## Description
 Provides a set of JavaFX ```TableColumn```'s widgets that allow the user to create filters.  This library only concerns itself with the UI portion, leaving the filtering up to the user.
 
-<img align="right" width="200" src="https://javafx-filterable-table-columns.googlecode.com/files/calendar-filter.png">
-![UI Example-1](https://javafx-filterable-table-columns.googlecode.com/files/demo.png)
-![UI Example-2](https://javafx-filterable-table-columns.googlecode.com/files/text-filter.png)
-![UI Example-3](https://javafx-filterable-table-columns.googlecode.com/files/enum-filter.png)
-![UI Example-3](https://javafx-filterable-table-columns.googlecode.com/files/number-filter.png)
+![Filter Headers](https://cloud.githubusercontent.com/assets/3843833/20464908/cc2d4e6a-af1f-11e6-9bbd-9ff400e926c9.png)
+![Numeric Filter](https://cloud.githubusercontent.com/assets/3843833/20464905/cc2c6ba8-af1f-11e6-9a5a-c96f8af54bca.png)
+![Text Filter](https://cloud.githubusercontent.com/assets/3843833/20464907/cc2cfe1a-af1f-11e6-8ad7-c27499da88d3.png)
+![Choice Filter](https://cloud.githubusercontent.com/assets/3843833/20464909/cc2e1e12-af1f-11e6-8445-70f5d9a3c093.png)
+![DateTime Filter](https://cloud.githubusercontent.com/assets/3843833/20464906/cc2cb888-af1f-11e6-8fc7-689dfe65c48a.png)
+![Boolean Filter](https://cloud.githubusercontent.com/assets/3843833/20464904/cc2b7806-af1f-11e6-9430-318cf72789b2.png)
 
 ## Use
 Preferred Method
